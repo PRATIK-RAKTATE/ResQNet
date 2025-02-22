@@ -9,6 +9,131 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
 
   <style>
+    /*header and links  */
+    @import url('https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", serif;
+  box-sizing: border-box;
+}
+.navbar {
+  height: 12vh;
+  width: 100%;
+  /* background-color: white; */
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin :0px 20px 0px 20px; */
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 0px 10px;
+}
+.navbar img {
+  height: 89px;
+  margin-left: 30px;
+}
+ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ul li {
+  margin: 10px;
+  list-style-type: none;
+}
+ul li a {
+  color: #000;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+ul li a:hover{
+    color: crimson;
+}
+
+.donate {
+  padding: 10px 30px;
+  height: 50px;
+  background-color: crimson;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  margin-right: 20px;
+  font-size: 1rem;
+}
+
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown ul {
+  font-size: 1.2rem;
+}
+
+/* Dropdown button */
+.dropdown-btn {
+  /* background-color: #f1f1f1; */
+  background-color: none;
+  /* color: white; */
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.dropdown-btn:hover{
+  color: crimson;
+  /* text-decoration: underline; */
+}
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  width: 100%;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  z-index: 1;
+}
+
+
+/* Dropdown links */
+.dropdown-content a {
+  color: black;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+}
+
+
+
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.navbar2 .navigation {
+  /* text-align: center; */
+  height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: crimson;
+}
+
+.navbar2 .navigation a{
+    color: #fff;
+    margin: 10px;
+    text-decoration: none;
+}
+
+
+
+
     /* Fullscreen map styling */
     html, body {
       margin: 0;
@@ -29,9 +154,53 @@
     .leaflet-popup-content b {
       color: #e60000;
     }
+
+
   </style>
 </head>
 <body>
+  <header>
+    <section class="navbar">
+      <img src="/assests/images/Logo.png" alt="logo" />
+      <ul>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./alert.html">Alerts</a></li>
+          <!-- <li><a href="#">Way To Give</a></li> -->
+
+        <div class="dropdown">
+          <ul class="dropdown-btn">
+            Our Work
+          </ul>
+          <div class="dropdown-content">
+            <a href="#">Emergency Food Relief</a>
+            <a href="#">Climate-Related Responses</a>
+            <a href="#">Legacy Programs</a>
+            <a href="#"> Chef Crops</a>
+          </div>
+        </div>
+
+        <li><a href="#">About</a></li>
+        <li><a href="./contact.html">Contact Us</a></li>
+        
+      </ul>
+      <button class="donate">Donate</button>
+    </section>
+    
+ 
+  </header>
+  <section class="navbar2">
+
+    <div class="navigation">
+      <p><a href="#sos">SOS Alerts</a></p>
+      <a href="#safezones">Safe Zones</a>
+      <a href="#transport">Transportation</a>
+      <a href="#community">Community Reports</a>
+      <a href="#resources">Resources</a>
+      <a href="#govt">Govt. Schemes</a>
+    </ul>
+  </div> 
+</section>
+ 
   <div id="map"></div>
 
   <!-- Leaflet JS -->
