@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rescue Data Map</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <style>
+    /* Fullscreen map styling */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+    #map {
+      height: 100%;
+      width: 100%;
+    }
+    /* Custom popup styling */
+    .leaflet-popup-content {
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+    }
+    .leaflet-popup-content b {
+      color: #2e8b57; /* Sea Green for rescued info */
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script>
+    // Initialize the map centered on India
+    var map = L.map('map').setView([22.15, 83.05], 5);
+
+    // Add a green-themed tile layer (using OpenTopoMap for an earthy look)
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data: © OpenStreetMap contributors, SRTM | Map style: © OpenTopoMap (CC-BY-SA)'
+    }).addTo(map);
+
+    // Create a custom rescue icon (example icon, adjust URL if needed)
+    var rescueIcon = L.icon({
+      iconUrl: 'https://cdn-icons-png.flaticon.com/512/2659/2659980.png',
+      iconSize: [30, 30],
+      iconAnchor: [15, 30],
+      popupAnchor: [0, -25]
+    });
+
+    // Fetch rescue data and add markers using the custom rescue icon
+    fetch('/api/rescues')
+      .then(response => response.json())
+      .then(data => {
+        data.forEach(item => {
+          var marker = L.marker([item.lat, item.lng], { icon: rescueIcon }).addTo(map);
+          marker.bindPopup(`<b>Rescued:</b> ${item.rescued} people`);
+        });
+      })
+      .catch(error => console.error('Error fetching rescue data:', error));
+  </script>
+</body>
+</html>
+    
