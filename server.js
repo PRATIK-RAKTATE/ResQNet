@@ -7,24 +7,22 @@ import { fileURLToPath } from "url";
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-//  Middleware
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Serve Static Files (Fix Path Issue)
+// Define __filename and __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, "public")));  // Serve public folder correctly
 
-//  Bounding Box for India
-const indiaBoundingBox = {
-  minLat: 6.8,
-  maxLat: 37.5,
-  minLon: 68.7,
-  maxLon: 97.4
-};
+// Serve the HTML file using res.sendFile()
+// This route sends the file "map.html" located in "public/html" folder when the root URL is accessed.
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "html", "map.html"));
+});
 
-//  API 1: Fetch Earthquake Alerts
+// Existing API endpoints and additional routes remain unchanged
+// API 1: Fetch Earthquake Alerts
 app.get("/api/alerts/", async (req, res) => {
   try {
     const response = await fetch(
@@ -49,7 +47,7 @@ app.get("/api/alerts/", async (req, res) => {
   }
 });
 
-//  API 2: Provide Local Disaster Data
+// API 2: Provide Local Disaster Data
 const disasterData = [
   { lat: 17.4, lng: 78.4, type: "Flood" },
   { lat: 28.6, lng: 77.2, type: "Earthquake" },
@@ -60,12 +58,7 @@ app.get("/api/disasters", (req, res) => {
   res.json(disasterData);
 });
 
-//  Fix Route for `map.html`
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "map.html"));
-});
-
-//  Start Server
+// Start Server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

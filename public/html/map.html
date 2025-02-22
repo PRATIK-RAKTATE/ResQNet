@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Disaster Map</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+
+  <style>
+    /* Fullscreen map styling */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+    #map {
+      height: 100%;
+      width: 100%;
+    }
+    /* Custom popup styling */
+    .leaflet-popup-content {
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+    }
+    .leaflet-popup-content b {
+      color: #e60000;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script>
+    // Initialize the map centered on India
+    var map = L.map('map').setView([22.15, 83.05], 5);
+
+    // Add a CartoDB dark tile layer for a modern look
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '© OpenStreetMap & CartoDB',
+      subdomains: 'abcd',
+      maxZoom: 19
+    }).addTo(map);
+
+    // Create a custom warning triangle icon
+    var warningIcon = L.icon({
+      iconUrl: 'https://cdn-icons-png.flaticon.com/512/564/564619.png', // Yellow-Red Triangle Icon
+      iconSize: [20, 20],       // Adjust size as needed
+      iconAnchor: [20, 40],     // Point of the icon corresponding to the marker's location
+      popupAnchor: [0, -35]     // Position of the popup relative to the icon
+    });
+
+    // Fetch local disaster data and add markers using the warning triangle icon
+    fetch('/api/disasters')
+      .then(response => response.json())
+      .then(data => {
+        data.forEach(disaster => {
+          var marker = L.marker([disaster.lat, disaster.lng], { icon: warningIcon }).addTo(map);
+          marker.bindPopup(`<b>⚠️ Warning:</b> ${disaster.type} detected at this location.`);
+        });
+      })
+      .catch(error => console.error('Error fetching disaster data:', error));
+  </script>
+</body>
+</html>
