@@ -19,6 +19,12 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   border-radius: 0px 10px;
 }
+.navbar h1{
+  margin: 0px 0px 0px 40px;
+  font-style: italic;
+  color: #dc143c;
+  font-size: 2rem;
+}
 .navbar img {
   height: 89px;
   /* width: 130px; */
@@ -51,6 +57,10 @@ ul li a:hover{
   border-radius: 5px;
   margin-right: 20px;
   font-size: 1rem;
+  cursor: pointer;
+}
+.navbar .donate:hover,.img-info .readmore-btn:hover,.feedback form .submit:hover,.input-field .alrt-btn:hover{
+  background-color: #ec3156;
 }
 
 /* Dropdown container */
@@ -77,6 +87,7 @@ ul li a:hover{
   color: crimson;
   /* text-decoration: underline; */
 }
+
 /* Dropdown content (hidden by default) */
 .dropdown-content {
   display: none;
@@ -99,12 +110,15 @@ ul li a:hover{
 }
 
 
-
-
 /* Show dropdown on hover */
 .dropdown:hover .dropdown-content {
   display: block;
 }
+.dropdown-content a:hover{
+  background-color: crimson;
+  color: #fff;
+}
+
 .navbar2 .navigation {
   /* text-align: center; */
   height: 5vh;
@@ -122,8 +136,6 @@ ul li a:hover{
 
 
 /* hero-section */
-
-
 
 .slider-container {
   position: relative;
@@ -150,22 +162,22 @@ ul li a:hover{
 background :linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url('/hackton/assests/images/landing-page/disaster1.jpg');
 background-repeat: no-repeat;
 background-size: cover;
-height: 50vh;
+height: 60vh;
 opacity: 0.9;
 
 }
 .image2{
-background :linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url('/assests/images/landing-page/disaster2.jpg');
+background :linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url(' /hackton/assests/images/landing-page/disaster2.jpg');
 background-repeat: no-repeat;
 background-size: cover;
-height: 50vh;
+height: 60vh;
 opacity: 0.9;
 }
 .image3{
 background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url('/hackton/assests/images/landing-page/disaster3.jpeg');
 background-repeat: no-repeat;
 background-size: cover;
-height: 50vh;
+height: 60vh;
 opacity: 0.9;
 }
 .prev, .next {
@@ -186,6 +198,7 @@ opacity: 0.9;
   color: white;
   margin-left: 50px;
 }
+
 .readmore-btn {
   padding: 10px 20px;
   color: #fff;
@@ -193,8 +206,11 @@ opacity: 0.9;
   border: none;
   border-radius: 10px;
   margin-top: 20px;
+  cursor: pointer;
 }
-
+.readmore-btn:hover{
+  background-color: #ec3156;
+}
 
 
 .filter-map .map iframe{
@@ -397,19 +413,22 @@ iframe{
 .alrt-btn{
   margin: 0px;
   border-radius: 0px;
+  cursor: pointer;
 }
 
 
 
 /* about us webpage  */
+
 .about .abt-heading {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+ 
 }
 .abt-heading{
-  margin:20vh 0vh 5vh 0vh;
+  margin:5vh 0vh 5vh 0vh;
   padding: 0vh 34vh 0vh 34vh;
 }
 .abt-heading h1{
@@ -468,4 +487,19 @@ font-size: 1.5rem;
 }
 .open .answer {
   display: block;
+}
+
+.volunter-sign{
+  display: flex;
+  justify-content: space-evenly;
+  margin: 80px 20px;
+}
+.volunter-sign h1{
+  font-size: 2.3rem;
+}
+.volunter-sign div{
+  text-align: center;
+}
+.volunter-sign p{
+  margin-bottom: 10px;
 }

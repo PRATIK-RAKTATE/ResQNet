@@ -8,8 +8,6 @@ import dotenv from "dotenv"; // Import dotenv
 
 dotenv.config(); // Load environment variables from .env file
 
-
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -24,19 +22,24 @@ const __dirname = path.dirname(__filename);
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, "public")));
 
-// Serve the HTML file when the root URL is accessed (map page remains unchanged)
+// Serve the main disaster map page
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "map.html"));
 });
 
-// New Route: Serve the Donation Page
+// Serve the Donation Page
 app.get("/donate", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "donate.html"));
 });
 
-// New Route: Serve the Safe Places Page
+// Serve the Safe Places Page
 app.get("/safeplaces", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "safePlaces.html"));
+});
+
+// New Route: Serve the SOS Page
+app.get("/sos", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "html", "sos.html"));
 });
 
 // API 1: Fetch Earthquake Alerts (unchanged)
@@ -91,31 +94,6 @@ const safePlacesData = [
 app.get("/api/safeplaces", (req, res) => {
   res.json(safePlacesData);
 });
-
-// // Stripe Payment Integration (Dummy Payments)
-// app.post("/create-payment", async (req, res) => {
-//   try {
-//     const { amount } = req.body;
-//     const paymentIntent = await stripe.paymentIntents.create({
-//       amount: amount || 5000,
-//       currency: "usd",
-//       payment_method_types: ["card"],
-//     });
-//     res.json({ clientSecret: paymentIntent.client_secret });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
-
-// // Payment History Endpoint
-// app.get("/payment-history", async (req, res) => {
-//   try {
-//     const paymentHistory = await stripe.paymentIntents.list({ limit: 10 });
-//     res.json(paymentHistory.data);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
 
 // Start Server
 app.listen(PORT, () => {

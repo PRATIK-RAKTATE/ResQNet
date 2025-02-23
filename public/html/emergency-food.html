@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Food Aid Network</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        :root {
+            --primary-red: #e63946;
+            --secondary-blue: #1d3557;
+            --accent-yellow: #ffd166;
+            --neutral-white: #f1faee;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--neutral-white);
+        }
+
+        /* Modern Header */
+        .header {
+            background: var(--secondary-blue);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: var(--neutral-white);
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            color: var(--primary-red);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--neutral-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-red);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section with Gradient Overlay */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(29, 53, 87, 0.9), rgba(29, 53, 87, 0.7)),
+                        url('https://images.unsplash.com/photo-1585032226651-759b368d7246?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            color: var(--neutral-white);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            animation: slideUp 1s ease;
+        }
+
+        .hero-text {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 5rem 5%;
+            background: var(--neutral-white);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-red);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Emergency Alert */
+        .emergency-alert {
+            background: var(--primary-red);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+            z-index: 1000;
+        }
+
+        /* Food Locator */
+        .locator-section {
+            padding: 4rem 5%;
+            background: var(--secondary-blue);
+            color: white;
+        }
+
+        .locator-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .map-placeholder {
+            flex: 1;
+            height: 400px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 5%;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        /* Animations */
+  
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .locator-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Emergency Alert Banner -->
+    <div class="emergency-alert">
+        🚨 Emergency Food Hotline: 1-800-HELP-NOW (Available 24/7)
+    </div>
+
+    <!-- Header -->
+    <header>
+        <section class="navbar">
+          <!-- <img src="D:\Disaster-management\Disaster-Management\assests\images\Logo.png" alt="logo" /> -->
+           <h1>ResQNet</h1>
+          <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./alert.html">Alerts</a></li>
+              <!-- <li><a href="#">Way To Give</a></li> -->
+  
+            <div class="dropdown">
+              <ul class="dropdown-btn">
+                Our Work
+              </ul>
+              <div class="dropdown-content">
+                <a href="./emergency-food.html">Emergency Food Relief</a>
+                <a href="#">Climate-Related Responses</a>
+                <a href="#">Legacy Programs</a>
+                <a href="#"> Chef Crops</a>
+              </div>
+            </div>
+  
+            <li><a href="./about.html">About</a></li>
+            <li><a href="./contact.html">Contact Us</a></li>
+            
+          </ul>
+          <button class="donate" onclick='window.location.href="Donate.html"'>Donate</button>
+        </section>
+        
+     
+      </header>
+      <section class="navbar2">
+  
+        <div class="navigation">
+          <p><a href="#sos">SOS Alerts</a></p>
+          <a href="#safezones">Safe Zones</a>
+          <a href="#transport">Transportation</a>
+          <a href="#community">Community Reports</a>
+          <a href="#resources">Resources</a>
+          <a href="#govt">Govt. Schemes</a>
+        </ul>
+      </div> 
+    </section>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Emergency Food Assistance When You Need It Most</h1>
+            <p class="hero-text">Immediate support for individuals and families facing food insecurity through our network of community partners.</p>
+            <div class="cta-container">
+                <button class="btn btn-primary readmore-btn">Get Help Now</button>
+                <button class="btn btn-secondary readmore-btn">Become a Partner</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-ambulance feature-icon"></i>
+                <h3>Emergency Delivery</h3>
+                <p>24/7 food delivery service for urgent situations</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-map-marker-alt feature-icon"></i>
+                <h3>Local Centers</h3>
+                <p>Find your nearest food distribution center</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-hands-helping feature-icon"></i>
+                <h3>Volunteer Network</h3>
+                <p>Join our community of dedicated volunteers</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Food Locator -->
+    <section class="locator-section">
+        <div class="locator-container">
+            <div class="map-placeholder">
+                <i class="fas fa-map-marked-alt fa-3x"></i>
+            </div>
+            <div class="locator-info">
+                <h2>Find Food Assistance Near You</h2>
+                <div class="search-container">
+                    <input type="text" placeholder="Enter ZIP code or address">
+                    <button class="btn btn-primary readmore-btn">Search</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p>"This service helped my family during our toughest times. Forever grateful!"</p>
+                <h4>- Maria G.</h4>
+            </div>
+            <!-- Add more testimonials -->
+        </div>
+    </section>
+</body>
+</html>

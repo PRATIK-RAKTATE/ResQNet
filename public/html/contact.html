@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Contact</title>
     <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
@@ -30,22 +30,12 @@
   <body>
     <header>
       <section class="navbar">
-        <img src="./assests/images/Logo.png" alt="logo" />
+        <!-- <img src="./assests/images/Logo.png" alt="logo" /> -->
+        <h1>ResQNet</h1>
         <ul>
           <li><a href="./index.html">Home</a></li>
           <li><a href="./alert.html">Alerts</a></li>
-          <div class="dropdown">
-            <ul class="dropdown-btn">
-              Way To Give
-            </ul>
-            <div class="dropdown-content">
-              <a href="https://www.paypal.com/us/home">Give via PayPal</a>
-              <a href="#">Give Once</a>
-              <a href="#">Give Monthly</a>
-              <a href="#">Other Ways to Give</a>
-            </div>
-          </div>
-
+        
           <div class="dropdown">
             <ul class="dropdown-btn">
               Our Work
@@ -58,20 +48,33 @@
             </div>
           </div>
 
-          <li><a href="#">About</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="./about.html">About</a></li>
+          <li><a href="./contact.html">Contact Us</a></li>
         </ul>
-        <button class="donate">Donate</button>
+        <button class="donate" onclick='window.location.href="Donate.html"'>Donate</button>
       </section>
     </header>
+    <section class="navbar2">
+
+      <div class="navigation">
+        <p><a href="#sos">SOS Alerts</a></p>
+        <a href="#safezones">Safe Zones</a>
+        <a href="#transport">Transportation</a>
+        <a href="#community">Community Reports</a>
+        <a href="#resources">Resources</a>
+        <a href="#govt">Govt. Schemes</a>
+      </ul>
+    </div> 
+  </section>
 
     <section class="about">
       <div class="abt-heading">
         <p>CONTACT US</p>
-        <h1>Thank you for your interest in Xyz</h1>
+        <p>712 472 123</p>
+        <h1>Thank you for your interest in ResQNet</h1>
         <p>
           Please see frequently asked questions below and feel free to reach out
-          if you have any further needs. Please note, Xyz does not accept
+          if you have any further needs. Please note, ResQNet does not accept
           unsolicited requests for funding.
         </p>
       </div>
@@ -165,7 +168,16 @@
           </div>
         </div>
       </div>
- 
+
+      <hr class="hr">
+      <div class="volunter-sign">
+        <h1>Become a Volunteer</h1>
+        <div>
+          <p>Join our team and make a difference in the community by volunteering.</p>
+          <button class="join-us readmore-btn">Join Us</button>
+        </div>
+
+      </div>
 
     <hr class="hr" />
     <!-- footer -->

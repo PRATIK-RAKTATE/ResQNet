@@ -1,0 +1,112 @@
+:root {
+  --primary-blue: crimson;
+  --alert-orange: #ff6d00;
+  --recovery-green: #00c853;
+  --dark-bg: #908286;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Hero Section */
+.hero {
+  height: 70vh;
+  background: linear-gradient(rgba(181, 136, 136, 0.7), rgba(50, 26, 26, 0.7)), 
+              url('disaster-bg.jpg') center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+}
+
+.cta-button {
+  padding: 15px 40px;
+  background: var(--primary-blue);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+/* Phases Section */
+.phases-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 50px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.phase-card {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.phase-card:hover {
+  transform: translateY(-10px);
+}
+
+.phase-icon {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+/* Impact Metrics */
+.metrics {
+  background: var(--dark-bg);
+  color: white;
+  padding: 80px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  text-align: center;
+}
+
+.metric-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--primary-blue);
+  margin-bottom: 10px;
+}
+
+/* Testimonials */
+.testimonials {
+  padding: 50px 20px;
+  background: #f8f9fa;
+}
+
+.testimonial-card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  margin: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero h1 {
+      font-size: 2.5rem;
+  }
+
+  .phases-container {
+      grid-template-columns: 1fr;
+  }
+}

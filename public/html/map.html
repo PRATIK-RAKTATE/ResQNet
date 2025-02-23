@@ -23,7 +23,6 @@
 
     /* Navbar styling */
     .navbar {
-      background-image: url(/assests/images/Logo.png);
       background-repeat: no-repeat;
       background-size: cover;
       height: 12vh;
@@ -38,6 +37,11 @@
     .navbar img {
       height: 89px;
       margin-left: 30px;
+    }
+
+    .navbar h1 {
+      color: crimson;
+      padding-left: 30px;
     }
 
     ul {
@@ -160,10 +164,12 @@
     /* Alert container */
     .alert-container {
       flex: 1;
-      padding: 20px;
+      padding-left: 100px;
       background-color: #f8f8f8;
       overflow-y: auto;
       display: flex;
+      flex-direction: column;
+      align-items: start;
     }
 
     .alert-container p {
@@ -175,9 +181,9 @@
 <body>
   <header>
     <section class="navbar">
-      <img src="/assests/images/Logo.png" alt="logo" />
+      <h1>ResQNet</h1>
       <ul>
-        <li><a href="./index.html">Home</a></li>
+        <li><a href="/public/html/index.html">Home</a></li>
         <li><a href="./alert.html">Alerts</a></li>
         <div class="dropdown">
           <ul class="dropdown-btn">Our Work</ul>
@@ -212,37 +218,27 @@
       <div id="map"></div>
     </div>
     <!-- Alert Section -->
-    <div class="alert-container" style="display: flex; flex-direction: column; align-items: start;">
+    <div class="alert-container">
       <h1 style="padding-left: 100px;">Alert</h1>
       <br>
       <br>
       <p>
-        ⚠️Alert 1: M 4.0 Earthquake –
-        <br>
-         10 km SSE of Nāngloi Jāt, India
-
-        Time: 2025-02-22T11:30:00Z
-        Magnitude: 4.0
-        Depth: ~10 km
-      </p>
-
-      <p>
-        ⚠️Alert 2: M 5.0 Earthquake –
-        <br>
-         49 km NE of Mulugu, India
-
-        Time: 2024-12-04T01:56:58Z
-        Magnitude: 5.0
-        Depth: 10 km
+        ⚠️ Alert 1: M 4.0 Earthquake –<br>
+        10 km SSE of Nāngloi Jāt, India<br>
+        Time: 2025-02-22T11:30:00Z<br>
+        Magnitude: 4.0, Depth: ~10 km
       </p>
       <p>
-        ⚠️Alert 3: M 4.3 Earthquake –
-        <br>
-         32 km NW of Moirāng, India
-
-        Time: 2024-11-27T12:50:07Z
-        Magnitude: 4.3
-        Depth: 57.1 km
+        ⚠️ Alert 2: M 5.0 Earthquake –<br>
+        49 km NE of Mulugu, India<br>
+        Time: 2024-12-04T01:56:58Z<br>
+        Magnitude: 5.0, Depth: 10 km
+      </p>
+      <p>
+        ⚠️ Alert 3: M 4.3 Earthquake –<br>
+        32 km NW of Moirāng, India<br>
+        Time: 2024-11-27T12:50:07Z<br>
+        Magnitude: 4.3, Depth: 57.1 km
       </p>
       <div class="alert-body"></div>
     </div>
@@ -259,7 +255,7 @@
       attribution: '© Esri & OpenStreetMap contributors'
     }).addTo(map);
 
-    // Create a custom warning triangle icon
+    // Create a custom warning triangle icon (for dynamic disaster events)
     var warningIcon = L.icon({
       iconUrl: 'https://cdn-icons-png.flaticon.com/512/564/564619.png',
       iconSize: [20, 20],
@@ -267,7 +263,30 @@
       popupAnchor: [0, -35]
     });
 
-    // Fetch disaster data from the server API and add markers to the map
+    // ------------------------------
+    // Static disaster points (displayed with a blue marker)
+    // ------------------------------
+    var staticIcon = L.icon({
+      iconUrl: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32]
+    });
+
+    var staticPoints = [
+      { lat: 28.6139, lng: 77.2090, title: "New Delhi Disaster Response Center" },
+      { lat: 19.0760, lng: 72.8777, title: "Mumbai Disaster Response Center" },
+      { lat: 13.0827, lng: 80.2707, title: "Chennai Disaster Response Center" }
+    ];
+
+    staticPoints.forEach(function (point) {
+      var marker = L.marker([point.lat, point.lng], { icon: staticIcon }).addTo(map);
+      marker.bindPopup("<b>" + point.title + "</b>");
+    });
+
+    // ------------------------------
+    // Fetch dynamic disaster data from the server API and add markers
+    // ------------------------------
     fetch('/api/disasters')
       .then(response => response.json())
       .then(data => {

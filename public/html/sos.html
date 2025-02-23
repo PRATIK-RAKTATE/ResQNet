@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ResQNet</title>
+  <link rel="stylesheet" href="./style.css">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <style>
+    /* Global Styles */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+    }
+    /* Navigation */
+    nav {
+      background: #333;
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    nav ul li {
+      flex: 1;
+    }
+    nav ul li a {
+      display: block;
+      padding: 15px;
+      text-align: center;
+      color: #fff;
+      text-decoration: none;
+    }
+    nav ul li a:hover {
+      background: #555;
+    }
+    /* Container & Sections */
+    .container {
+      padding: 20px;
+    }
+    .section {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      width: 100%;
+    }
+    .section h2 {
+      margin-top: 0;
+    }
+    /* SOS Button */
+    .sos-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: red;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.8);
+    }
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .modal-content button {
+      margin: 10px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .btn-confirm {
+      background: #007BFF;
+      color: #fff;
+    }
+    .btn-cancel {
+      background: #ccc;
+      color: #333;
+    }
+    /* Form Styles */
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    form label {
+      margin: 10px 0 5px;
+    }
+    form input[type="text"],
+    form textarea,
+    form select {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 100%;
+    }
+    form button {
+      margin-top: 15px;
+      padding: 10px;
+      background: crimson;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    form button:hover {
+      background: rgb(193, 104, 122);
+    }
+    /* Grid for Resources */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .resource-card {
+      background: #eaeaea;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+      }
+    }
+    /* Map Section Styles */
+    #map {
+      width: 100%;
+      height: 300px;
+      border: 1px solid #ccc;
+      margin-top: 20px;
+    }
+    /* Dummy SOS Alerts Styles */
+    #sosAlerts {
+      background: #ffecec;
+      border: 1px solid #ffabab;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    #sosAlerts p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with Title and SOS Button -->
+  <header>
+    <section class="navbar">
+      <h1>ResQNet</h1>
+      <ul>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./alert.html">Alerts</a></li>
+        <div class="dropdown">
+          <ul class="dropdown-btn">Our Work</ul>
+          <div class="dropdown-content">
+            <a href="./emergency-food.html">Emergency Food Relief</a>
+            <a href="#">Climate-Related Responses</a>
+            <a href="#">Legacy Programs</a>
+            <a href="#">Chef Crops</a>
+          </div>
+        </div>
+        <li><a href="./about.html">About</a></li>
+        <li><a href="./contact.html">Contact Us</a></li>
+      </ul>
+      <button class="donate" onclick='window.location.href="Donate.html"'>Donate</button>
+    </section>
+  </header>
+  <section class="navbar2">
+    <div class="navigation">
+      <p><a href="#sos">SOS Alerts</a></p>
+      <a href="#safezones">Safe Zones</a>
+      <a href="#transport">Transportation</a>
+      <a href="#community">Community Reports</a>
+      <a href="#resources">Resources</a>
+      <a href="#govt">Govt. Schemes</a>
+    </div>
+  </section>
+  
+  <!-- Main Content Container -->
+  <div class="container">
+    <!-- SOS Alerts Section -->
+    <section id="sos" class="section">
+      <h2>SOS Alerts</h2>
+      <p>Press the SOS button at the bottom right to send an emergency alert to local authorities, NGOs, and nearby residents.</p>
+      <!-- Dummy SOS Alerts Box -->
+      <div id="sosAlerts">
+        <p><strong>Dummy Alert 1:</strong> Fire reported near Sector 10.</p>
+        <p><strong>Dummy Alert 2:</strong> Flooding in the Riverfront area.</p>
+        <p><strong>Dummy Alert 3:</strong> Power outage in the Industrial Zone.</p>
+      </div>
+      <!-- Modal for SOS Confirmation -->
+      <div id="sosModal" class="modal">
+        <div class="modal-content">
+          <h3>Confirm SOS Alert</h3>
+          <p>Are you sure you want to send an emergency alert?</p>
+          <button class="btn-confirm" onclick="sendAlert()">Yes, Send Alert</button>
+          <button class="btn-cancel" onclick="closeSOSModal()">Cancel</button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Safe Zones Section with Map -->
+    <section id="safezones" class="section">
+      <h2>Safe Zones</h2>
+      <p>View nearby safe zones on the map below.</p>
+      <div id="map"></div>
+    </section>
+    
+    <!-- Transportation Assistance Section -->
+    <section id="transport" class="section">
+      <h2>Transportation Assistance</h2>
+      <form>
+        <label for="pickup">Pickup Location:</label>
+        <input type="text" id="pickup" placeholder="Your current location" />
+        <label for="destination">Destination:</label>
+        <input type="text" id="destination" placeholder="Enter destination" />
+        <label for="transportType">Type of Transport:</label>
+        <select id="transportType">
+          <option value="ambulance">Ambulance</option>
+          <option value="bus">Bus</option>
+          <option value="volunteer">Volunteer Vehicle</option>
+        </select>
+        <button type="submit">Request Transport</button>
+      </form>
+    </section>
+    
+    <!-- Community Reports Section -->
+    <section id="community" class="section">
+      <h2>Community Reports</h2>
+      <p>Submit your report or see updates from other civilians.</p>
+      <form>
+        <label for="report">Your Report:</label>
+        <textarea id="report" rows="4" placeholder="Describe the situation..."></textarea>
+        <button type="submit">Submit Report</button>
+      </form>
+      <div style="margin-top: 20px;">
+        <strong>Recent Reports:</strong>
+        <ul>
+          <li>Report 1 - <em>Location XYZ</em></li>
+          <li>Report 2 - <em>Location ABC</em></li>
+        </ul>
+      </div>
+    </section>
+    
+    <!-- Resources Section -->
+    <section id="resources" class="section">
+      <h2>Resources</h2>
+      <p>Access essential resources like food, water, and medical supplies.</p>
+      <div class="grid">
+        <div class="resource-card">
+          <h3>Food</h3>
+          <p>Available at Local Center A.</p>
+        </div>
+        <div class="resource-card">
+          <h3>Water</h3>
+          <p>Available at Local Center B.</p>
+        </div>
+        <div class="resource-card">
+          <h3>Medical</h3>
+          <p>Available at Local Clinic.</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Government Schemes Section -->
+    <section id="govt" class="section">
+      <h2>Government Schemes & Documentation</h2>
+      <p>Find information on government aid schemes and download necessary documentation.</p>
+      <div>
+        <h3>Scheme 1</h3>
+        <p>Details and requirements for Scheme 1.</p>
+        <a href="#">Download Application Form</a>
+      </div>
+      <div style="margin-top: 20px;">
+        <h3>Scheme 2</h3>
+        <p>Details and requirements for Scheme 2.</p>
+        <a href="#">Download Guidelines</a>
+      </div>
+    </section>
+  </div>
+  
+  <hr class="hr">
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="lists">
+      <div class="list1">
+        <li><a href="#">About Us</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+        <li><a href="#">Donate</a></li>
+        <li><a href="#">Volunteers</a></li>
+      </div>
+      <div class="list2">
+        <li><a href="#">Team</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Financials</a></li>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <ul class="dropdown-btn">
+        <i class="fa-solid fa-globe"></i>
+        Language
+      </ul>
+      <div class="dropdown-content">
+        <a href="#">English</a>
+      </div>
+    </div>
+
+    <div class="feedback">
+      <h2>Feedback</h2>
+      <form action="#" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="rating">Rating:</label>
+        <select id="rating" name="rating">
+          <option value="5">Excellent</option>
+          <option value="4">Good</option>
+          <option value="3">Average</option>
+          <option value="2">Poor</option>
+          <option value="1">Very Poor</option>
+        </select>
+
+        <button type="submit" class="submit">Submit</button>
+      </form>
+    </div>
+  </footer>
+  <div class="copywrite">
+    <p>©2025 made by status 200</p>
+  </div>
+
+  <!-- SOS Button -->
+  <button class="sos-button" onclick="openSOSModal()">SOS</button>
+  
+  <!-- JavaScript for Modal Handling -->
+  <script>
+    function openSOSModal() {
+      document.getElementById('sosModal').style.display = 'flex';
+    }
+    function closeSOSModal() {
+      document.getElementById('sosModal').style.display = 'none';
+    }
+    function sendAlert() {
+      // Integrate your backend functionality here
+      alert('SOS Alert Sent!');
+      closeSOSModal();
+    }
+  </script>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script>
+    // Initialize the map in the Safe Zones section
+    var map = L.map('map').setView([22.15, 83.05], 5);
+
+    // Add a tile layer (Esri World Topographic Map)
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '© Esri & OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Dummy static markers for SOS (using red marker)
+    var sosIcon = L.icon({
+      iconUrl: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32]
+    });
+
+    // Static dummy locations (for SOS events)
+    var sosPoints = [
+      { lat: 28.6139, lng: 77.2090, title: "New Delhi - Emergency Shelter" },
+      { lat: 19.0760, lng: 72.8777, title: "Mumbai - Rescue Hub" },
+      { lat: 13.0827, lng: 80.2707, title: "Chennai - Relief Center" }
+    ];
+
+    sosPoints.forEach(function(point) {
+      var marker = L.marker([point.lat, point.lng], { icon: sosIcon }).addTo(map);
+      marker.bindPopup("<b>" + point.title + "</b>");
+    });
+  </script>
+</body>
+</html>
