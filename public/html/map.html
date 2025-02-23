@@ -1,195 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Interactive Disaster Map</title>
 
   <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
 
   <style>
-    /*header and links  */
+    /* Import fonts */
     @import url('https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+    /* Reset styles and basic typography */
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", serif;
+      box-sizing: border-box;
+    }
 
-* {
-  margin: 0;
-  padding: 0;
-  font-family: "Poppins", serif;
-  box-sizing: border-box;
-}
-.navbar {
-  height: 12vh;
-  width: 100%;
-  /* background-color: white; */
-  color: black;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /* margin :0px 20px 0px 20px; */
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  border-radius: 0px 10px;
-}
-.navbar img {
-  height: 89px;
-  margin-left: 30px;
-}
-ul {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-ul li {
-  margin: 10px;
-  list-style-type: none;
-}
-ul li a {
-  color: #000;
-  text-decoration: none;
-  font-size: 1.2rem;
-}
-ul li a:hover{
-    color: crimson;
-}
+    /* Navbar styling */
+    .navbar {
+      background-image: url(/assests/images/Logo.png);
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 12vh;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+      border-radius: 0px 10px;
+    }
 
-.donate {
-  padding: 10px 30px;
-  height: 50px;
-  background-color: crimson;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  margin-right: 20px;
-  font-size: 1rem;
-}
+    .navbar img {
+      height: 89px;
+      margin-left: 30px;
+    }
 
-/* Dropdown container */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-.dropdown ul {
-  font-size: 1.2rem;
-}
+    ul {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-/* Dropdown button */
-.dropdown-btn {
-  /* background-color: #f1f1f1; */
-  background-color: none;
-  /* color: white; */
-  padding: 10px 15px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-.dropdown-btn:hover{
-  color: crimson;
-  /* text-decoration: underline; */
-}
-/* Dropdown content (hidden by default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: white;
-  min-width: 160px;
-  width: 100%;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  z-index: 1;
-}
+    ul li {
+      margin: 10px;
+      list-style-type: none;
+    }
 
+    ul li a {
+      color: #000;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
 
-/* Dropdown links */
-.dropdown-content a {
-  color: black;
-  padding: 10px;
-  text-decoration: none;
-  display: block;
-}
+    ul li a:hover {
+      color: crimson;
+    }
 
+    .donate {
+      padding: 10px 30px;
+      height: 50px;
+      background-color: crimson;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      margin-right: 20px;
+      font-size: 1rem;
+    }
 
+    /* Dropdown styles */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
 
+    .dropdown-btn {
+      padding: 10px 15px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
 
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-.navbar2 .navigation {
-  /* text-align: center; */
-  height: 5vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: crimson;
-}
+    .dropdown-btn:hover {
+      color: crimson;
+    }
 
-.navbar2 .navigation a{
-    color: #fff;
-    margin: 10px;
-    text-decoration: none;
-}
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      width: 100%;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      z-index: 1;
+    }
 
+    .dropdown-content a {
+      color: black;
+      padding: 10px;
+      text-decoration: none;
+      display: block;
+    }
 
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
 
+    /* Second navbar styling */
+    .navbar2 .navigation {
+      height: 5vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: crimson;
+    }
 
-    /* Fullscreen map styling */
-    html, body {
+    .navbar2 .navigation a {
+      color: #fff;
+      margin: 10px;
+      text-decoration: none;
+    }
+
+    /* Fullscreen map and overall page styling */
+    html,
+    body {
       margin: 0;
       padding: 0;
       height: 100%;
       font-family: Arial, sans-serif;
     }
+
+    /* Flex container for map and alert */
+    .container {
+      display: flex;
+      height: calc(100% - 17vh);
+      /* Adjust height based on header/navbars */
+    }
+
+    /* Map container */
+    .map-container {
+      flex: 2;
+      position: relative;
+    }
+
     #map {
-      height: 100%;
-      width: 70%;
-    }
-    /* Custom popup styling */
-    .leaflet-popup-content {
-      font-size: 14px;
-      font-weight: bold;
-      color: #333;
-    }
-    .leaflet-popup-content b {
-      color: #e60000;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
     }
 
+    /* Alert container */
+    .alert-container {
+      flex: 1;
+      padding: 20px;
+      background-color: #f8f8f8;
+      overflow-y: auto;
+      display: flex;
+    }
 
+    .alert-container p {
+      padding-bottom: 60px;
+    }
   </style>
 </head>
+
 <body>
   <header>
     <section class="navbar">
-      <img src="/public/assests/images/Logo.png" alt="logo"/>
+      <img src="/assests/images/Logo.png" alt="logo" />
       <ul>
         <li><a href="./index.html">Home</a></li>
         <li><a href="./alert.html">Alerts</a></li>
-          <!-- <li><a href="#">Way To Give</a></li> -->
-
         <div class="dropdown">
-          <ul class="dropdown-btn">
-            Our Work
-          </ul>
+          <ul class="dropdown-btn">Our Work</ul>
           <div class="dropdown-content">
             <a href="#">Emergency Food Relief</a>
             <a href="#">Climate-Related Responses</a>
             <a href="#">Legacy Programs</a>
-            <a href="#"> Chef Crops</a>
+            <a href="#">Chef Crops</a>
           </div>
         </div>
-
         <li><a href="#">About</a></li>
         <li><a href="./contact.html">Contact Us</a></li>
-        
       </ul>
       <button class="donate">Donate</button>
     </section>
-    
- 
   </header>
   <section class="navbar2">
-
     <div class="navigation">
       <p><a href="#sos">SOS Alerts</a></p>
       <a href="#safezones">Safe Zones</a>
@@ -197,12 +202,50 @@ ul li a:hover{
       <a href="#community">Community Reports</a>
       <a href="#resources">Resources</a>
       <a href="#govt">Govt. Schemes</a>
-    </ul>
-  </div> 
-</section>
- 
-  <div id="map"></div>
-  <div class="alert">
+    </div>
+  </section>
+
+  <!-- Container with flex display -->
+  <div class="container">
+    <!-- Map Section -->
+    <div class="map-container">
+      <div id="map"></div>
+    </div>
+    <!-- Alert Section -->
+    <div class="alert-container" style="display: flex; flex-direction: column; align-items: start;">
+      <h1 style="padding-left: 100px;">Alert</h1>
+      <br>
+      <br>
+      <p>
+        ⚠️Alert 1: M 4.0 Earthquake –
+        <br>
+         10 km SSE of Nāngloi Jāt, India
+
+        Time: 2025-02-22T11:30:00Z
+        Magnitude: 4.0
+        Depth: ~10 km
+      </p>
+
+      <p>
+        ⚠️Alert 2: M 5.0 Earthquake –
+        <br>
+         49 km NE of Mulugu, India
+
+        Time: 2024-12-04T01:56:58Z
+        Magnitude: 5.0
+        Depth: 10 km
+      </p>
+      <p>
+        ⚠️Alert 3: M 4.3 Earthquake –
+        <br>
+         32 km NW of Moirāng, India
+
+        Time: 2024-11-27T12:50:07Z
+        Magnitude: 4.3
+        Depth: 57.1 km
+      </p>
+      <div class="alert-body"></div>
+    </div>
   </div>
 
   <!-- Leaflet JS -->
@@ -211,23 +254,24 @@ ul li a:hover{
     // Initialize the map centered on India
     var map = L.map('map').setView([22.15, 83.05], 5);
 
-    // Add a green-themed tile layer (Esri World Topographic Map)
+    // Add a tile layer (Esri World Topographic Map)
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
       attribution: '© Esri & OpenStreetMap contributors'
     }).addTo(map);
 
     // Create a custom warning triangle icon
     var warningIcon = L.icon({
-      iconUrl: 'https://cdn-icons-png.flaticon.com/512/564/564619.png', // Yellow-Red Triangle Icon
-      iconSize: [20, 20],       // Adjust size as needed
-      iconAnchor: [20, 40],     // Point of the icon corresponding to the marker's location
-      popupAnchor: [0, -35]     // Position of the popup relative to the icon
+      iconUrl: 'https://cdn-icons-png.flaticon.com/512/564/564619.png',
+      iconSize: [20, 20],
+      iconAnchor: [20, 40],
+      popupAnchor: [0, -35]
     });
 
-    // Fetch local disaster data and add markers using the warning triangle icon
+    // Fetch disaster data from the server API and add markers to the map
     fetch('/api/disasters')
       .then(response => response.json())
       .then(data => {
+        console.log("Disaster data received:", data);
         data.forEach(disaster => {
           var marker = L.marker([disaster.lat, disaster.lng], { icon: warningIcon }).addTo(map);
           marker.bindPopup(`<b>⚠️ Warning:</b> ${disaster.type} detected at this location.`);
@@ -236,4 +280,5 @@ ul li a:hover{
       .catch(error => console.error('Error fetching disaster data:', error));
   </script>
 </body>
+
 </html>

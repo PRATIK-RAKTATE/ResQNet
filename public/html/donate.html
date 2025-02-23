@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Support Our Cause - Donate Now</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background-color: #f5f5f5;
+    }
+    .navbar {
+      background-color: #ffffff;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+    }
+    .logo {
+      font-size: 1.5rem;
+      color: #2c3e50;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 80px auto 2rem;
+      padding: 0 20px;
+    }
+    .hero {
+      text-align: center;
+      padding: 4rem 0;
+      background: linear-gradient(135deg, #3498db, #2c3e50);
+      color: white;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .donation-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .donation-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .donation-card:hover {
+      transform: translateY(-5px);
+    }
+    .donation-card.selected {
+      border: 2px solid #3498db;
+    }
+    .donation-amount {
+      font-size: 2rem;
+      color: #2c3e50;
+      font-weight: bold;
+      margin: 1rem 0;
+    }
+    .donation-form {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #2c3e50;
+      font-weight: 500;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    button {
+      background-color: #3498db;
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    .custom-amount {
+      margin: 2rem 0;
+    }
+    .recurring-donation {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #3498db;
+    }
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    @media (max-width: 768px) {
+      .donation-options {
+        grid-template-columns: 1fr;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+    }
+    /* Style for Stripe Card Element */
+    #card-element {
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: white;
+    }
+    #card-errors {
+      color: red;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">CharityOrg</div>
+  </nav>
+  <div class="container">
+    <div class="hero">
+      <h1>Support Our Cause</h1>
+      <p>Your donation helps us make a difference. Every contribution matters.</p>
+    </div>
+    <div class="donation-options">
+      <div class="donation-card" data-amount="2500">
+        <h3>Basic Support</h3>
+        <div class="donation-amount">$25</div>
+        <p>Provides meals for 5 children</p>
+      </div>
+      <div class="donation-card" data-amount="5000">
+        <h3>Regular Support</h3>
+        <div class="donation-amount">$50</div>
+        <p>Supports education for 2 children</p>
+      </div>
+      <div class="donation-card" data-amount="10000">
+        <h3>Premium Support</h3>
+        <div class="donation-amount">$100</div>
+        <p>Funds medical care for a family</p>
+      </div>
+    </div>
+    <div class="donation-form">
+      <h2>Payment Information</h2>
+      <div class="custom-amount">
+        <label>Or enter custom amount (in USD):</label>
+        <input type="number" id="custom-amount" placeholder="Enter amount in USD">
+      </div>
+      <div class="recurring-donation">
+        <span>Make this donation recurring:</span>
+        <label class="switch">
+          <input type="checkbox" id="recurring">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <form id="payment-form">
+        <div class="form-group">
+          <label>Email for Receipt</label>
+          <input type="email" id="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Card Details</label>
+          <div id="card-element"><!-- Stripe Element will be inserted here --></div>
+          <div id="card-errors" role="alert"></div>
+        </div>
+        <button type="submit">Donate Now</button>
+      </form>
+    </div>
+  </div>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    // Initialize Stripe with your publishable key
+    const stripe = Stripe('your_stripe_publishable_key_here'); // Replace with your actual publishable key
+    const elements = stripe.elements();
+    const card = elements.create('card');
+    card.mount('#card-element');
+
+    // Handle real-time validation errors from the card Element.
+    card.on('change', ({ error }) => {
+      const displayError = document.getElementById('card-errors');
+      displayError.textContent = error ? error.message : '';
+    });
+
+    // Handle form submission.
+    const form = document.getElementById('payment-form');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      // Determine the donation amount
+      const customAmountInput = document.getElementById('custom-amount');
+      let amount = customAmountInput.value ? parseInt(customAmountInput.value) * 100 : null;
+      
+      // If no custom amount, check if a donation card was selected
+      if (!amount) {
+        const selectedCard = document.querySelector('.donation-card.selected');
+        if (selectedCard) {
+          amount = parseInt(selectedCard.getAttribute('data-amount'));
+        }
+      }
+      // Default amount if none selected or provided
+      if (!amount) {
+        amount = 5000; // default $50
+      }
+
+      // Create Payment Intent on the server
+      const response = await fetch('/create-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount })
+      });
+      const { clientSecret, error: serverError } = await response.json();
+      if (serverError) {
+        document.getElementById('card-errors').textContent = serverError;
+        return;
+      }
+
+      // Confirm the Payment Intent with the card details
+      const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: { email: document.getElementById('email').value }
+        }
+      });
+
+      if (error) {
+        document.getElementById('card-errors').textContent = error.message;
+      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        alert('Payment successful!');
+        // Optionally, you can redirect or update the UI here.
+      }
+    });
+
+    // Allow selection of donation cards
+    const donationCards = document.querySelectorAll('.donation-card');
+    donationCards.forEach(cardEl => {
+      cardEl.addEventListener('click', () => {
+        donationCards.forEach(el => el.classList.remove('selected'));
+        cardEl.classList.add('selected');
+        document.getElementById('custom-amount').value = '';
+      });
+    });
+  </script>
+</body>
+</html>

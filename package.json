@@ -8,8 +8,11 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.17.1",
     "mongoose": "^8.10.1",
-    "node-fetch": "^2.7.0"
+    "node-fetch": "^2.7.0",
+    "strip": "^3.0.0",
+    "stripe": "^17.6.0"
   }
 }
